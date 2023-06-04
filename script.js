@@ -159,10 +159,6 @@ let flag = true
 while(flag){
     const n = Math.round(Math.random() * 99 + 1)
     flag = n % 4 !== 3
-    // if(n % 4 === 3){
-    //     flag = false
-    // }
-    console.log(n)
 }
 
 let i = 0
