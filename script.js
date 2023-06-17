@@ -1,172 +1,96 @@
-// Простые
-   let number  = 1234 // Числовой тип
-// объявление  иницализация
-let double = 12.43
+const app = document.getElementById("app")
 
-let string = "some string" // Строковый тип
-let string1 = 'some string 1'
+let player = "cross" // cross | zero
+const cells = []
+for(let i = 0; i < 9; i++) {
+    const cell = document.createElement("div")
+    cell.classList.add("cell")
 
-let boolean = true // Логический тип
-let boolean1 = false
+    cell.addEventListener("click", (event) => onClickCell(event, i))
 
-let undef = undefined // Пустые значения
-// NaN, null
-
-let symbol = Symbol("some") // Символ*
-
-// Составные
-let array = [] // Массив
-
-let obj = {} // Объект
-
-let func = function(a, b, c) {} // Функция
-let func1 = (a, b, c) => {} // Стрелочная функция
-function func2(a, b, c) {}
-
-let value
-
-value = 1432
-
-value = "string"
-
-
-const yep = "VALUE" // Константная ссылка на переменную в памяти
-
-// yep = "Other value" // error - нельзя изменять значение константы
-
-const obj1 = {
-    key: "value"
+    app.appendChild(cell)
+    cells.push(cell)
 }
 
-obj1.key // "value"
+function onClickCell(event, index) {
+    // let event, index
+    const cell = cells[index]
+    // cells[index].innerHTML = "<span>x</span>"
+    if(!cell.classList.contains("cross") && !cell.classList.contains("zero")){
+        cell.classList.add(player)
+        checkWin(index, player)
 
-obj1.key = "value1"
-obj1.key1 = "value_112"
-
-console.log(obj1)
-
-const arr = []
-
-console.log("this array - ", arr)
-
-arr.push("string")
-
-console.log("this array - ", arr)
-
-const num = 0//parseInt(prompt("Введите число"))
-// console.log(typeof num, num)
-// console.log(typeof parseInt(num), num)
-
-let res = ""
-
-if(Number.isNaN(num)){
-    res = "Введено не число"
-}
-else if(num > 10){
-    res = "Чисто больше загаданного"
-}
-else if(num === 10){
-    res = "Вы угадали"
-}
-else {
-    res = "Число меньше загаданного"
-}
-
-// alert(res)
-
-const a = 144
-const b = 4
-
-let c
-c = a + b
-c = a * b
-c = a - b
-c = a / b
-c = a**b // Степень
-c = a % b // Взятие остатка от деления
-
-console.log(c)
-
-// 1. Запросить два числа
-// 2. Запросить оперцию 
-// 3. Вернуть ошибку или результат
-
-const num1 =0 // +prompt("Введите первое число")
-const num2 =0 // +prompt("Введите второе число")
-const action =0 // prompt("Введите действие")
-
-if(Number.isNaN(num1) || Number.isNaN(num2)){
-    alert("Не корректные числа")
-}
-else {
-    let res
-    // if(action === "*"){
-    //     res = num1 * num2
-    // }
-    // else if(action === "/"){
-    //     res = num1 / num2
-    // }
-    // else if(action === "-"){
-    //     res = num1 - num2
-    // }
-    // else if(action === "+"){
-    //     res = num1 + num2
-    // }
-    // else if(action === "**"){
-    //     res = num1 ** num2
-    // }
-    // else if(action === "%"){
-    //     res = num1 % num2
-    // }
-
-    switch(action){
-        case "/":
-            res = num1 / num2
-            break
-        case "*":
-            res = num1 * num2
-            break
-        case "+":
-            res = num1 + num2
-            break
-        case "-":
-            res = num1 - num2
-            break
-        case "%":
-            res = num1 % num2
-            break
-        case "**":
-            res = num1 ** num2
-            break
-        default:
-            res = undefined
-    }
-
-    if(res === undefined){
-        // alert("Не корректная операция")
-    }
-    else {
-        alert("Результат - " + res)
+        if(player === "cross"){
+            // cell.innerText = "x"
+            player = "zero"
+        }
+        else if(player === "zero"){
+            // cell.innerText = "o"
+            player = "cross"
+        }
     }
 }
 
-for(let i = 0; i < 10; i++){ // i = i + 1 === i++
-    // console.log("Итерация №", i)
-}
+function checkWin(index, player) {
+    let isWin = false
 
-let flag = true
+    const row = Math.floor(index / 3)
+    const column = index % 3
 
-while(flag){
-    const n = Math.round(Math.random() * 99 + 1)
-    flag = n % 4 !== 3
-}
+    const cell1 = cells[row], 
+          cell2 = cells[row + 1], 
+          cell3 = cells[row + 2]
+    
+    if(cell1.classList.contains(player) && cell2.classList.contains(player) && cell3.classList.contains(player)){
+        isWin = true
+    }
 
-let i = 0
+    if(!isWin){
+        const cell1 = cells[column], 
+              cell2 = cells[column + 3], 
+              cell3 = cells[column + 6]
 
-do {
-    console.log("do..while")
-} while(i > 0)
+        if(cell1.classList.contains(player) && cell2.classList.contains(player) && cell3.classList.contains(player)){
+            isWin = true
+        }  
+    }
 
-while(i > 0) {
-    console.log("while")
+    if(!isWin){
+        let cell1, cell2, cell3
+        if(
+            (row === 0 || row === 2) && (column === 0 || column === 2) ||
+            row === 1 && column === 1
+        ){
+            if(
+                row === 0 && column === 0 || 
+                row === 1 && column === 1 ||
+                row === 2 && column === 2
+            ){
+                cell1 = cells[0]
+                cell2 = cells[4]
+                cell3 = cells[8]
+            }
+
+            if(
+                row === 0 && column === 2 || 
+                row === 1 && column === 1 ||
+                row === 2 && column === 0
+            ){
+                cell1 = cells[2]
+                cell2 = cells[4]
+                cell3 = cells[6]
+            }
+
+            if(cell1.classList.contains(player) && cell2.classList.contains(player) && cell3.classList.contains(player)){
+                isWin = true
+            }
+        }
+    }
+
+    if(isWin){
+        setTimeout(
+            () => {alert(`Win is ${player}`)},
+            100
+        ) 
+    }
 }

@@ -1,0 +1,51 @@
+@use "sass:math";
+
+#app {
+    margin-top: 48px;
+    margin-left: 48px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 300px;
+
+    > div.cell {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        box-sizing: border-box;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        position: relative;
+
+        &.cross {
+            &:before,
+            &:after {
+                content: "";
+                width: 80% * math.sqrt(2);
+                height: 3px;
+                background: black;
+                border-radius: 2px;
+                position: absolute;
+            }
+            &:before {
+                transform: rotate(45deg);
+            }
+            &:after {
+                transform: rotate(-45deg);
+            }
+        }
+        &.zero {
+            &:after {
+                content: "";
+                width: 80%;
+                height: 80%;
+                border: 3px solid black;
+                border-radius: 50%;
+            }
+        }
+    }
+}
