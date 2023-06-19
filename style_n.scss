@@ -9,6 +9,8 @@
 
     width: 300px;
 
+    position: relative;
+
     > div.cell {
         width: 100px;
         height: 100px;
@@ -47,5 +49,24 @@
                 border-radius: 50%;
             }
         }
+    }
+}
+
+div.popup-wrapper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none; // flex
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.2);
+
+    > div.popup {
+        background-color: white;
+        width: 300px;
+        border-radius: 15px;
+        padding: 16px;
     }
 }

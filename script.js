@@ -1,5 +1,8 @@
 const app = document.getElementById("app")
 
+const popup = document.getElementById("popup")
+const popupBody = document.getElementById("popup-body")
+
 let player = "cross" // cross | zero
 const cells = []
 for(let i = 0; i < 9; i++) {
@@ -11,6 +14,18 @@ for(let i = 0; i < 9; i++) {
     app.appendChild(cell)
     cells.push(cell)
 }
+
+const line = document.createElement("div")
+
+line.style.backgroundColor = "red" //"black"
+line.style.width = "0"
+line.style.height = "0"
+line.style.borderRadius = "2px"
+line.style.position = "absolute"
+line.style.transitionDuration = "4s"
+
+app.appendChild(line)
+
 
 function onClickCell(event, index) {
     // let event, index
@@ -33,16 +48,18 @@ function onClickCell(event, index) {
 
 function checkWin(index, player) {
     let isWin = false
+    let direction
 
     const row = Math.floor(index / 3)
     const column = index % 3
 
-    const cell1 = cells[row], 
-          cell2 = cells[row + 1], 
-          cell3 = cells[row + 2]
-    
+    const cell1 = cells[row * 3], 
+          cell2 = cells[row * 3 + 1], 
+          cell3 = cells[row * 3 + 2]
+
     if(cell1.classList.contains(player) && cell2.classList.contains(player) && cell3.classList.contains(player)){
         isWin = true
+        direction = "row"
     }
 
     if(!isWin){
@@ -52,6 +69,7 @@ function checkWin(index, player) {
 
         if(cell1.classList.contains(player) && cell2.classList.contains(player) && cell3.classList.contains(player)){
             isWin = true
+            direction = "column"
         }  
     }
 
@@ -69,6 +87,7 @@ function checkWin(index, player) {
                 cell1 = cells[0]
                 cell2 = cells[4]
                 cell3 = cells[8]
+                direction = "diagonal-lr"
             }
 
             if(
@@ -79,6 +98,7 @@ function checkWin(index, player) {
                 cell1 = cells[2]
                 cell2 = cells[4]
                 cell3 = cells[6]
+                direction = "diagonal-rl"
             }
 
             if(cell1.classList.contains(player) && cell2.classList.contains(player) && cell3.classList.contains(player)){
@@ -88,9 +108,83 @@ function checkWin(index, player) {
     }
 
     if(isWin){
-        setTimeout(
-            () => {alert(`Win is ${player}`)},
-            100
-        ) 
+        crossLineWin(row, column, direction)
+        showWinPopup(player)
+        // setTimeout(
+        //     () => {
+        //         crossLineWin(row, column, "diagonal-lr")
+        //         // alert(`Win is ${player}`)
+        //     },
+        //     100
+        // ) 
     }
+}
+
+function crossLineWin(row, column, direction){
+    // const line = document.createElement("div")
+
+    // line.style.backgroundColor = "red" //"black"
+    // line.style.width = "90%"
+    // line.style.height = "3px"
+    // line.style.borderRadius = "2px"
+    // line.style.position = "absolute"
+
+    switch(direction){
+        case "row":
+            line.style.transitionProperty = "width"
+
+            line.style.top = row * 100 + 50 - 1.5 + "px"
+            line.style.left = "5%"
+            // row === 0 => 0 * 100 + 50 = 50px
+            // row === 1 => 1 * 100 + 50 = 150px
+            // row === 2 => 2 * 100 + 50 = 250px
+
+            line.style.width = "90%"
+            line.style.height = "3px"
+
+            break;
+        case "column":
+            line.style.transitionProperty = "height"
+            
+            line.style.top = "5%"
+            line.style.left = column * 100 + 50 - 1.5 + "px"
+
+            line.style.width = "3px"
+            line.style.height = "90%"
+
+            // line.style.transform = "rotate(90deg)"
+
+            break;
+        case "diagonal-lr":
+            line.style.transitionProperty = "height"
+            
+            line.style.width = "3px"
+            line.style.height = 90 * Math.sqrt(2) + "%"
+
+            line.style.left = "calc(50% - 1.5px)"
+            line.style.top = "calc(5% - 50px - 6px)"
+
+            line.style.transform = "rotate(-45deg)"
+
+            break;
+        case "diagonal-rl":
+            line.style.transitionProperty = "height"
+            
+            line.style.width = "3px"
+            line.style.height = 90 * Math.sqrt(2) + "%"
+
+            line.style.left = "calc(50% - 1.5px)"
+            line.style.top = "calc(5% - 50px - 6px)"
+
+            line.style.transform = "rotate(45deg)"
+
+            break;
+    }
+
+    // app.appendChild(line)
+}
+
+function showWinPopup(player){
+    popupBody.innerText = `Winner is ${player}` // "Winner is " + player
+    popup.style.display = "flex"
 }
