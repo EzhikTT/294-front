@@ -188,3 +188,50 @@ function showWinPopup(player){
     popupBody.innerText = `Winner is ${player}` // "Winner is " + player
     popup.style.display = "flex"
 }
+
+function openSelect(event){
+    const target = event.target
+    const parent = target.parentElement // select
+    const body = parent.querySelector("div.body")
+
+    // body.style.display = "inherit"
+    const height = body.children[0].clientHeight * body.children.length + 2
+
+    body.style.height = height + "px"
+    body.style.border = "1px solid black"
+
+    // debugger
+
+}
+
+function chooseItem(event){
+    const item = event.target
+    const body = item.parentElement
+    const title = body.parentElement.querySelector("div.title")
+
+    title.innerText = item.innerText
+
+    body.style.height = 0
+
+    setTimeout(
+        () => {body.style.border = "none"},
+        2600
+    )
+}
+
+
+function initSelect(className){
+    const selects = document.getElementsByClassName(className)
+
+    for(let select of selects){
+        const title = select.querySelector("div.title")
+        const options = select.querySelectorAll("div.body > div")
+
+        title.addEventListener("click", (event) => openSelect(event))
+        for(let option of options){
+            option.addEventListener("click", (event) => chooseItem(event))
+        }
+    }
+}
+
+initSelect("select")

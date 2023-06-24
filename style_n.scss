@@ -70,3 +70,46 @@ div.popup-wrapper {
         padding: 16px;
     }
 }
+
+form {
+    margin: 40px 40px 100px;
+
+
+}
+
+div.select {
+    margin: 40px;
+    width: 250px;
+
+    position: relative;
+    > div.title {
+        border: 1px solid black;
+        border-radius: 3px;
+        padding: 8px 4px;
+        box-sizing: border-box;
+        background-color: white;
+        box-shadow: 2px 2px 15px rgba(0,0,0,0.2);
+    }
+    > div.body {
+        // border: 1px solid black;
+        border-radius: 3px;
+        position: absolute;
+        width: 100%;
+        background-color: white;
+        box-sizing: border-box;
+        top: calc(100% + 3px);
+        box-shadow: 2px 2px 15px rgba(0,0,0,0.2);
+        // display: none;
+        height: 0;
+        overflow: hidden;
+        transition: height 3s;
+        z-index: 99;
+        > div {
+            padding: 8px 4px;
+            &:hover {
+                background-color: rgba(0,0,255,0.05);
+                cursor: pointer;
+            }
+        }
+    }
+}
