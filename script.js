@@ -1,19 +1,13 @@
 const app = document.getElementById("app")
+const score = document.getElementById("score")
 
 const popup = document.getElementById("popup")
 const popupBody = document.getElementById("popup-body")
 
 let player = "cross" // cross | zero
 const cells = []
-for(let i = 0; i < 9; i++) {
-    const cell = document.createElement("div")
-    cell.classList.add("cell")
 
-    cell.addEventListener("click", (event) => onClickCell(event, i))
-
-    app.appendChild(cell)
-    cells.push(cell)
-}
+const scores = []
 
 const line = document.createElement("div")
 
@@ -108,8 +102,12 @@ function checkWin(index, player) {
     }
 
     if(isWin){
+        const index = scores.findIndex((item) => item.figure === player)
+        scores[index].score++
+
         crossLineWin(row, column, direction)
         showWinPopup(player)
+        showScores()
         // setTimeout(
         //     () => {
         //         crossLineWin(row, column, "diagonal-lr")
@@ -185,8 +183,13 @@ function crossLineWin(row, column, direction){
 }
 
 function showWinPopup(player){
-    popupBody.innerText = `Winner is ${player}` // "Winner is " + player
+    const name = scores.find((item) => item.figure === player).name
+    popupBody.innerText = `Winner is ${name}` // "Winner is " + player
     popup.style.display = "flex"
+    setTimeout(
+        () => {popup.style.display = "none"},
+        1000
+    )
 }
 
 function openSelect(event){
@@ -208,8 +211,12 @@ function chooseItem(event){
     const item = event.target
     const body = item.parentElement
     const title = body.parentElement.querySelector("div.title")
+    const input = body.parentElement.querySelector("input[type=hidden]")
+
+    // debugger
 
     title.innerText = item.innerText
+    input.value = item.innerText
 
     body.style.height = 0
 
@@ -218,7 +225,6 @@ function chooseItem(event){
         2600
     )
 }
-
 
 function initSelect(className){
     const selects = document.getElementsByClassName(className)
@@ -235,3 +241,78 @@ function initSelect(className){
 }
 
 initSelect("select")
+
+function startGame(event){
+    event.preventDefault()
+
+    let player1, player2, firstPlayer, size
+
+    const form = event.target
+
+    for(let item of form){
+        if(item.tagName === "INPUT"){
+            switch(item.name){
+                case "player1":
+                    player1 = item.value
+                    break
+                case "player2":
+                    player2 = item.value
+                    break
+                case "first":
+                    firstPlayer = item.value
+                    break
+                case "size":
+                    size = item.value
+                    break
+            }
+        }
+    }
+
+    size **= 2
+
+    for(let i = 0; i < size; i++) {
+        const cell = document.createElement("div")
+        cell.classList.add("cell")
+    
+        cell.addEventListener("click", (event) => onClickCell(event, i))
+    
+        app.appendChild(cell)
+        cells.push(cell)
+    }
+
+    if(firstPlayer){
+        player = firstPlayer
+    }
+
+    scores.push(
+        {
+            name: player1,
+            figure: player,
+            score: 0
+        },
+        {
+            name: player2,
+            figure: player === "cross" ? "zero" : "cross",
+            score: 0
+        }
+    )
+
+    showScores()
+
+    document.getElementById("popup-start").style.display = "none"
+
+    // debugger
+}
+
+function showScores(){
+    score.innerHTML = `
+        <div>
+            <span>${scores[0].name}</span>
+            <span>${scores[1].name}</span>
+        </div>
+        <div>
+            <span>${scores[0].score}</span>
+            <span>${scores[1].score}</span>
+        </div>
+    `
+}

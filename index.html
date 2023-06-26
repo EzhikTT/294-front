@@ -4,123 +4,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Урок 13</title>
+    <title>Урок 14</title>
     <link rel="stylesheet" href="style_n.css">
 </head>
 <body>
-    <div class="select">
-        <div class="title">choose option</div>
-        <div class="body">
-            <div>option 1</div>
-            <div>option 2</div>
-            <div>option 3</div>
-            <div>option 4</div>
-            <div>option 5</div>
-            <div>option 6</div>
-        </div>
-    </div>
-    <div class="select">
-        <div class="title">choose option</div>
-        <div class="body">
-            <div>option 1</div>
-            <div>option 2</div>
-            <div>option 3</div>
-            <div>option 4</div>
-            <div>option 5</div>
-            <div>option 6</div>
-        </div>
-    </div><div class="select">
-        <div class="title">choose option</div>
-        <div class="body">
-            <div>option 1</div>
-            <div>option 2</div>
-            <div>option 3</div>
-            <div>option 4</div>
-            <div>option 5</div>
-            <div>option 6</div>
-        </div>
-    </div><div class="select">
-        <div class="title">choose option</div>
-        <div class="body">
-            <div>option 1</div>
-            <div>option 2</div>
-            <div>option 3</div>
-            <div>option 4</div>
-            <div>option 5</div>
-            <div>option 6</div>
-        </div>
-    </div><div class="select">
-        <div class="title">choose option</div>
-        <div class="body">
-            <div>option 1</div>
-            <div>option 2</div>
-            <div>option 3</div>
-            <div>option 4</div>
-            <div>option 5</div>
-            <div>option 6</div>
-        </div>
-    </div>
-
-
-    <form>
-        <input id="test" name="test"/>
-        <label for="test">test</label>
-
-        <br/>
-
-        <label>
-            <span>other test</span>
-            <input name="other_test" type="text"/>
-        </label>
-        <br/>
-        <label>
-            <span>other test</span>
-            <input name="other_test" type="number"/>
-        </label>
-        <br/>
-        <label>
-            <span>other test</span>
-            <input name="other_test" type="email"/>
-        </label>
-        <br/>
-        <label>
-            <span>other test</span>
-            <input name="other_test" type="checkbox"/>
-        </label>
-        <br/>
-        <label>
-            <span>other test</span>
-            <input name="oradio" type="radio"/>
-            <input name="oradio" type="radio" checked/>
-            <input name="oradio" type="radio"/>
-            <input name="oradio" type="radio"/>
-        </label>
-        <br/>
-        <label>
-            <span>other test</span>
-            <input name="other_test" type="date"/>
-        </label>
-        <br/>
-        <textarea name="text"></textarea>
-        <br/>
-        <select name="options">
-            <option value="op1">option 1</option>
-            <option value="op2">option 2</option>
-            <option value="op3">option 3</option>
-            <option value="op4">option 4</option>
-        </select>
-        <br/>
-        <button type="submit">submit</button>
-        <button type="reset">reset</button>
-        <button type="button">button</button>
-
-    </form>
     <div id="app"></div>
+    <div id="score"></div>
+    
     <div class="popup-wrapper" id="popup">
         <div class="popup">
             <div class="body" id="popup-body"></div>
         </div>
     </div>
+
+    <div class="popup-wrapper" id="popup-start">
+        <div class="popup">
+            <div class="body" id="popup-start-body">
+                <form onsubmit="startGame(event)">
+                    <label>
+                        <span>player 1</span>
+                        <input name="player1"/>
+                    </label>
+                    <label>
+                        <span>player 2</span>
+                        <input name="player2"/>
+                    </label>
+                    <label>
+                        <span>first player</span>
+                        <div class="select">
+                            <input type="hidden" name="first"/>
+                            <div class="title">choose option</div>
+                            <div class="body">
+                                <div>cross</div>
+                                <div>zero</div>
+                            </div>
+                        </div>
+                    </label>
+                    <label>
+                        <span>field size</span>
+                        <input name="size" type="number" value="3" readonly/>
+                    </label>
+                    <button>new game</button> 
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

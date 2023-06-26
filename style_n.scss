@@ -63,6 +63,32 @@ div.popup-wrapper {
     align-items: center;
     background-color: rgba(0,0,0,0.2);
 
+    &#popup-start {
+        display: flex;
+        > div.popup {
+            > div.body {
+                > form {
+                    display: flex;
+                    flex-direction: column;
+                    > label {
+                        margin-bottom: 12px;
+                        display: flex;
+                        align-items: center;
+                        > :first-child {
+                            width: 30%;
+                        }
+                        > :last-child {
+                            width: 70%;
+                        }
+                        > * {
+                            box-sizing: border-box;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     > div.popup {
         background-color: white;
         width: 300px;
@@ -72,13 +98,13 @@ div.popup-wrapper {
 }
 
 form {
-    margin: 40px 40px 100px;
+    // margin: 40px 40px 100px;
 
 
 }
 
 div.select {
-    margin: 40px;
+    // margin: 40px;
     width: 250px;
 
     position: relative;
@@ -109,6 +135,29 @@ div.select {
             &:hover {
                 background-color: rgba(0,0,255,0.05);
                 cursor: pointer;
+            }
+        }
+    }
+}
+
+#score {
+    margin-top: 32px;
+
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    > div {
+        display: flex;
+        &:first-child {
+            border-bottom: 1px solid black;
+        }
+        > span {
+            text-align: center;
+            width: 50%;
+            box-sizing: border-box;
+            &:first-child {
+                border-right: 1px solid black;
             }
         }
     }
